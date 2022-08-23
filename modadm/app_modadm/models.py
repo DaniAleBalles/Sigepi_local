@@ -42,7 +42,7 @@ INF_MOD = [
     ['ls_param_cnf', []],
     ]
 
-ROL_BASE =[
+INF_APP =[
     #[etq_rol,desc,req_reg,tipo],
     [0,'Adm.Sistema','',''],
     [1,'Adm.Institución','',''],
