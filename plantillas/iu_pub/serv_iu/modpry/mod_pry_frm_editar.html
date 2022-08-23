@@ -1,0 +1,14 @@
+{% extends 'app_pry_iu.html' %}
+{% load static %}
+
+{% block articulo %}
+<!--Plantilla para editar -->
+<div class="cnt_norm">
+  <h1>{{ tit_form }}</h1> 
+    <form class="" action="" method="post">
+      {% csrf_token %}
+      {{ form.as_p}}
+      <button type="submit" >Editar</button>
+    </form>
+</div>
+{% endblock articulo %}

@@ -1,0 +1,27 @@
+{% extends 'app_base_iu.html' %}
+{% load static %}
+
+{% block articulo %}
+<div class="cont">
+    <img src="{% static 'img/logo_usta.png' %}" alt="Universidad Santo Tomás">
+    <h1 class="">Ingresar al SIGEPI-USTA</h1>
+    <div>
+        <form method="post" action="">
+            {% if Users.is_authenticated %}
+            <p>Ya ingreaste y tu sesión está activa</p>
+            {% else %}
+            <div class="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="submit">
+                {# Assumes you setup the password_reset view in your URLconf #}
+                {% if form.errors %}
+                    <p>Tu usuario o contraseña no son correctos. Por favor, inténtalo de nuevo.</p>
+                {% endif %}
+                <p><a href="{% url 'reset_password' %}">¿ Olvidaste tu contraseña ?</a></p>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock articulo %}

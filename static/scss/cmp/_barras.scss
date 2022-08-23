@@ -1,0 +1,227 @@
+/* sigepi.css: Barras, barras de estado, barras de progreso y menús de navegación verticales */
+.brr{
+    @include extruc_gr_pn($num_col:1,$num_filas:1,$tam_fr1:1fr,$tam_fr2:0,$tam_fr3:0);
+    flex-direction: row;
+    font-family:--fam-fuentes-titulos;
+    font-size:medium;
+    font-weight: bold;
+    overflow:hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.br_pn_der{
+    /* Barra del encabezado panel derecho */
+    @include extruc_gr_pn($num_col:1,$num_filas:1,$tam_fr1:1fr,$tam_fr2:0fr,$tam_fr3:0fr);
+    height: 50px;
+    flex-wrap:nowrap;
+    padding-right: 5px;
+    gap: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.br_herr {
+    /* barra de herramientas */
+    @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:1fr,$tam_fr2:11fr,$tam_fr3:0);
+    @include fn_sim(var(--color-primario));
+    width: minmax(125px,300px);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    visibility: visible;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    .enc_br_herr{
+        /* encabezado barra de herramientas */
+        @include fn_deg_hrz(var(--color-primario-2),var(--color-primario));
+        width: 100%;
+        height: 45px;
+        display:block;
+        padding: 5px 5px;
+        color: var(--color-blanco);
+        font-size:small;
+        font-family: var(--fam-fuentes-titulos);
+        &_adm{
+            @extend .enc_br_herr;
+            @include fn_deg_hrz(var(--color-secundario),var(--color-secundario-1));
+        }
+    }
+    &_adm{
+        @extend .br_herr;
+        @include fn_sim(var(--color-secundario));
+    }
+}
+
+.br_app{
+    @extend .brr;
+    @include fn_sim(var(--color-primario));
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ul{
+        list-style: none;
+        color: var(--color-primario);
+        font-weight: bolder;
+        display: block;
+        padding: 0;
+        margin: 0;
+        li{
+            margin-left: 0;
+            padding-left: 0;
+            display: inline-block;
+            vertical-align: middle;
+            width: 100%;
+            a{
+                color: rgba(255,255,255,0.9);
+                font-size: 0.75em;
+                padding: 1.05em	1em;
+                position: relative;
+                display:block;
+                text-decoration: none;
+                &:hover{
+                    color:var(--color-primario-2);
+                }
+                i{
+                    font-size: 3em;
+                    padding-right: 0.5em;
+                    width: 100%;
+                    width: 6em;
+                    display: inline;
+                    vertical-align:middle;
+                }
+            }
+            &:hover >.categ_br_herr {
+                background-color:var(--color-primario);
+                @extend .trasl_hrz_izq;
+            }
+        }
+    }
+    >ul >li >a:after {
+        content: '>';
+        font-family:'Courier New', Courier, monospace;
+        font-size: 0.5em;
+        width: 10px;
+        color: #fff;
+        position: absolute;
+        right: 0.75em;
+        top: 45%;
+    }
+    .categ_br_herr{
+        position: absolute;
+        background-color:var(--color-primario);
+        z-index: 9;
+        left: 3.7em;
+        top: 0;
+        height: 100%;
+        @extend .trasl_hrz_der;
+        a:hover{
+            background-color:var(--color-primario-oscuro);
+            color:var(--color-primario-2);
+            transition:all 0.3s ease;
+        }
+        &_adm{
+            background-color:var(--color-secundario);
+            a:hover{
+                background-color:var(--color-secundario-oscuro);
+                color:var(--color-secundario-2);
+            }
+        }
+    }
+    &_adm{
+        @extend .brr;
+        @include fn_sim(var(--color-secundario));
+        ul{
+            color: var(--color-secundario);
+            li{
+                a:hover{
+                    color:var(--color-secundario-2);
+                  }
+            }
+            
+
+        }
+    }
+}
+
+.br_trj{
+    display: flex;
+    background-color:rgba(138, 218, 255, 0.185);
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap:wrap;
+    gap: 5px;
+    height:100%;
+    width:100%;
+    overflow:auto;
+    ul{
+        list-style: none;
+        font-weight: bolder;  
+        padding: 0px;    
+        li{ 
+            list-style: none;
+            /* top:5px; */
+            margin: 3px;
+            padding-top: 0px;
+            a{
+                display:flex;
+                position: relative;
+                width:100%;
+                @extend .btn_prm_cl;
+                list-style: none;
+                vertical-align: middle;
+                text-decoration:none;
+                font-size:smaller;
+            }
+        }
+    }
+}
+
+.br_pry{
+
+}
+
+.nav_der{
+    display: flex;
+    flex-direction: column;
+    &_titulo {
+        display:flex;
+        float: right;
+        color: var(--color-blanco);
+        font-size: 24px;
+        padding-top: 8px;
+        padding-right: 5px;
+    }
+    ul {
+        list-style:none;
+        list-style-position: outside;
+        padding: 0px;
+        li {
+            list-style:none;
+            list-style-position: outside;
+            padding: 5px;
+            &:hover{
+                padding: 0px;
+            }
+        }
+        .logotipo {
+            display:flex;
+            position:static;
+            float: right;
+            color: var(--color-blanco);
+            font-size: 2.1rem;
+            padding: 0px;
+            margin-top:0px;
+            right:0;
+            a{
+                img{
+                    position:relative;
+                    height:50px;
+                    color:var(--color-blanco);
+                    font-size: 30px;
+                    padding: 2px;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    
+}

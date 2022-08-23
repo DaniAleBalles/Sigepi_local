@@ -1,0 +1,51 @@
+{% extends 'app_pry_iu.html' %}
+{% load static %}
+
+<!--Tarjeta para consultar la información basica de un proyecto-->
+{% block articulo %}
+<div class="cnt_norm" style="flex-direction: row; flex-wrap: wrap;">
+<h2>Cronogramas</h2>
+<br>
+{% for crono_pry in  object_list %}
+<div id="trj_pry" class="trj_pry">
+    <div id="trj_pry_simple" class="trj_pry_simple">
+        <span>simple</span>
+        <div id="cnt_sup" class="cnt_sup">
+            <div id="cnt_sup_img"  class="cnt_sup_img">
+                <i class="material-icons" style="width: 65px; height: 65px; color: var(--color-blanco);">calendar_month</i>
+                <span id="cnt_sup_img_base" class="cnt_sup_img_base"> {{ crono_pry.fch_ini_pry}}</span>
+                <span id="cnt_sup_img_base" class="cnt_sup_img_base"> {{ crono_pry.fch_fin_pry}}</span>
+            </div>
+            <div id="cnt_sup_titulo" class="cnt_sup_titulo">
+                {{ crono_pry.nomb_crono}} 
+            </div>
+        </div>
+        <div id="cuerpo_pry" class="cuerpo_pry">
+            <div>
+                {{ crono_pry.desc_crono}}
+            </div>
+        </div>
+    </div>
+    <div id="" class="trj_pry_br">
+        <a  href="{% url 'veretapa' %}">
+            <i class="material-icons">description</i>
+            <span>Ver</span>
+        </a>
+        <a  href="{% url 'edit_crono' crono_pry.id_crono_pry %}">
+            <i class="material-icons">edit</i>
+            <span>Editar</span>
+        </a>
+        <a   href="{% url 'addcrono' %}">
+            <i class="material-icons">add</i>
+            <span>Agregar</span>
+        </a>
+        <a  href="{% url 'archi_crono' crono_pry.id_crono_pry %}">
+            <i class="material-icons">delete</i>
+            <span>Eliminar</span>
+        </a>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock articulo %}

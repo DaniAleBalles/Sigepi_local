@@ -1,0 +1,49 @@
+{% extends 'app_pry_iu.html' %}
+{% load static %}
+
+<!--Tarjeta para consultar la información basica de un programa de investigación-->
+{% block articulo %}
+<div class="cnt_norm" style="flex-direction: row; flex-wrap: wrap;">
+<h2>Programas de Investigación</h2>
+<br>
+{% for prgi_base in  object_list %}
+<div id="trj_pry" class="trj_pry">
+    <div id="trj_pry_simple" class="trj_pry_simple">
+        <span>simple</span>
+        <div id="cnt_sup" class="cnt_sup">
+            <div id="cnt_sup_img"  class="cnt_sup_img">
+                <i class="material-icons" style="width: 65px; height: 65px; color: var(--color-blanco);">task</i>
+                <span id="cnt_sup_img_base" class="cnt_sup_img_base">{{ prgi_base.nomb_archi}}</span>
+            </div>           
+            <div id="cnt_sup_titulo" class="cnt_sup_titulo">
+                {{ prgi_base.titulo_prg}}
+            </div>
+        </div>
+        <div id="cuerpo_pry" class="cuerpo_pry">
+            <div>
+                {{ prgi_base.desc_prg}}
+            </div>
+        </div>
+    </div>
+    <div id="" class="trj_pry_br">
+        <a  href="{% url 'cn_det_prgi' %}">
+            <i class="material-icons">description</i>
+            <span>Ver</span>
+        </a>
+        <a  href="{% url 'edit_prgi' prgi_base.id_prgi %}">
+            <i class="material-icons">edit</i>
+            <span>Editar</span>
+        </a>
+        <a   href="">
+            <i class="material-icons">add</i>
+            <span>Agregar</span>
+        </a>
+        <a  href="{% url 'archi_prgi' prgi_base.id_prgi %}">
+            <i class="material-icons">delete</i>
+            <span>Eliminar</span>
+        </a>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock articulo %}

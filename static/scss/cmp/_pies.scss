@@ -1,0 +1,40 @@
+/* sigepi.css: pies del diseño */
+.pie{
+    position:fixed;
+    display:grid;
+    grid-template-rows:10px 50px 12px;
+    width: 100%;
+    left: 0;
+    bottom:0px;
+    align-items: center;
+    overflow: hidden;
+    background-color: var(--color-primario);
+    &_extra{
+        display: block;
+        margin-top: 0px;
+        color: var(--color-primario-1);
+        text-align: center;
+    }
+    &_ppal {
+        display: block;
+        height: 52px;
+        color: var(--color-primario-tr);
+        }
+    .der_copia{
+        display: block;
+        margin-top: 2px;
+        p{
+            text-align: center;
+            color: var(--color-primario-1);
+            font-size: smaller;
+            font-family: var(--fam-fuentes-titulos);
+        }
+    }
+    
+}
+
+.pie_app {
+    left: 0;
+    bottom:0px;
+    width: 100%;
+}

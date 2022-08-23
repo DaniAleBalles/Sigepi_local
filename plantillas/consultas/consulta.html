@@ -1,0 +1,44 @@
+{% extends 'base_cons.html' %}
+{% load static %}
+
+<!-- metadatos del documento (head)-->
+
+{% block meta_index %}{% endblock meta_index%}
+{% block meta_cuerpo %}{% endblock meta_cuerpo%}
+{% block meta_cabecera %}{% endblock meta_cabecera%}
+{% block meta_menu_ppal %}{% endblock meta_menu_ppal%}
+{% block meta_app %}{% endblock meta_app%}
+{% block meta_panel_der %}{% endblock meta_panel_der%}
+{% block meta_panel_ppal %}{% endblock meta_panel_ppal%}
+{% block meta_panel_iz %}{% endblock meta_panel_iz%}
+{% block meta_pie_app%}{% endblock meta_pie_app%}
+{% block meta_pie_extra%}{% endblock meta_pie_extra%}
+{% block meta_pie%}{% endblock meta_pie%}
+
+
+
+<!-- título de la página-->
+{% block titulo %}Página de consultas del SIGEPI-USTA{% endblock titulo%}
+
+<!-- Cabecera-->
+{% block menu_ppal %}
+    {% include 'menu_ppal_cons.html'%}
+{% endblock menu_ppal %}
+
+<!-- Panel derecho-->
+{% block panel_der %}
+    {% include 'pn_der_cons.html'%}
+{% endblock panel_der %}
+<!-- bloques de Aplicación-->
+{% block app %}
+{% endblock app %}
+
+{% block script_app%}
+{% endblock script_app%}
+
+
+<!-- Bloques del pie del documento-->
+{% block pie %}
+    {% include "pie_cons.html" %}
+{% endblock pie%}
+

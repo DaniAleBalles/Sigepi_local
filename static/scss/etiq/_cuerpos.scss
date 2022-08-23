@@ -1,0 +1,16 @@
+/* sigepi.css: formato para las etiquetas html del diseño */
+
+/* formato para la etiqueta <body> */
+.cuerpo {
+    position:fixed;
+    display:grid;
+    grid-template-rows: 55px auto 65px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primario-tr);
+    color:var(--color-primario);
+    font-family:var(--fam-fuentes-contenido);
+    font-size: .9rem;
+    margin: 0;
+    overflow: auto;
+  }

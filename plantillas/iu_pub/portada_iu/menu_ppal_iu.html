@@ -1,0 +1,44 @@
+{% load static %}
+{% csrf_token %}
+
+{% block meta_menu_ppal %}
+{% endblock meta_menu_ppal%}
+
+{% block menu_ppal %}
+    <div class="cnt_btn_menu">
+        <button id="btn_menu" class="btn_menu" onclick="abrir()">
+            <i class="material-icons">menu</i>
+        </button>
+        <button id="btn_cerrar" class="btn_cerrar" onclick="cerrar()">
+            <i class="material-icons">close</i>
+        </button>
+    </div>
+    <div class="titulo">
+        SIGEPI-USTA
+    </div>
+    <div class="logotipo">
+        <a href="{% url 'inicio' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" ></img>
+        </a>
+    </div>
+{% endblock menu_ppal %}
+
+{% block script_menu_ppal%}
+<script>
+function abrir() {
+  document.getElementById("panel_ppal").style.gridTemplateColumns= "4fr 7fr 0fr";
+  document.getElementById("panel_der").style.display = "flex";
+  document.getElementById("panel_der").style.width = "100%";
+  document.getElementById("btn_menu").style.display = "none";
+  document.getElementById("btn_cerrar").style.display = "flex";
+}
+
+function cerrar() {
+  document.getElementById("panel_ppal").style.gridTemplateColumns= "0fr auto 0fr";
+  document.getElementById("panel_der").style.width = "0px";
+  document.getElementById("panel_der").style.display = "flex";
+  document.getElementById("btn_menu").style.display = "flex";
+  document.getElementById("btn_cerrar").style.display = "none";
+}
+</script>
+{% endblock script_menu_ppal%}

@@ -1,0 +1,279 @@
+/* sijepi: tarjetas del diseño */
+
+/* tarjeta base */
+.trj{
+    @extend .gr_col1;
+    width: minmax(120px, 450px);
+    height:minmax(150px, 250px);
+    padding: 0px;
+    overflow:auto;
+    margin: 5px;
+}
+
+/* Tarjeta personal */
+.trj_pers {
+    @include extruc_gr_pn($num_col:2,$num_filas:1,$tam_fr1:5fr,$tam_fr2:1fr,$tam_fr3:0fr);
+    width: minmax(120px,550px);
+    border-radius: 5px;
+    background: linear-gradient(45deg, var(--color-primario-2),var(--color-primario));
+    border: 2px solid rgba(115, 204, 255, 0.521);
+    box-shadow: 5px 5px 5px var(--color-primario);
+    transform: translate(0%,0px);
+    overflow:auto;
+    &_cnt{
+        @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:4fr,$tam_fr2:1fr,$tam_fr3:0fr);
+        &_ppal{
+            @include extruc_gr_pn($num_col:2,$num_filas:1,$tam_fr1:1fr,$tam_fr2:3fr,$tam_fr3:0fr);
+            .cnt_img{
+                @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:3fr,$tam_fr2:1fr,$tam_fr3:0fr);
+                align-items: center;
+                justify-items: center;
+                .img{
+                    @extend .circulo;
+                    position:relative;
+                }
+                .base_img{
+                    position:relative;
+                    text-align: center;
+                }
+            }
+            .cnt_trj{
+                @include extruc_gr_pn($num_col:1,$num_filas:3,$tam_fr1:20px,$tam_fr2:150px,$tam_fr3:20px);
+                height: 100%;
+                color: var(--color-blanco);
+                text-align: center;
+                align-content: center;
+                a{
+                    @extend .btn_prm_cl;
+                    background: linear-gradient(-45deg, var(--color-primario),var(--color-primario-2));
+                    height: 15px;
+                    justify-self:center;
+                    text-decoration: none;
+                    color: var(--color-primario-tr);
+                    font-size: small;
+                    font-family: var(--fam-fuentes-btn);
+                    &:hover{
+                        color: var(--color-primario-oscuro);
+                        background: linear-gradient(-45deg, var(--color-primario-tr),var(--color-primario-2));
+                    }
+                }
+                &_titulo{
+                    background:linear-gradient(-45deg, var(--color-primario),var(--color-primario-2));
+                    display:flex;
+                    font-size: medium;
+                    align-items:center;
+                    top:0px;
+                }
+                &_txt{
+
+                    /* display:flex; */
+                    text-align: justify;
+                    align-items: center;
+                    white-space:clip;
+                    overflow:auto;
+                    word-break: break-word;
+                    margin: 5px;
+                    text-overflow:ellipsis;
+                }
+                &_pie{
+                    background:linear-gradient(-45deg, var(--color-primario),var(--color-primario-2));
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    text-align: justify;
+                    align-items: center;
+                    gap: 5px;
+                    bottom: 0px;
+                }
+            }
+        }
+        &_pie{
+            @extend .brr;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            position: relative;
+            width: auto;
+            background-color: var(--color-primario-oscuro);
+            align-items:center;
+            gap: 5px;
+            border-radius: 25px 0px 0px 25px;
+            padding-left: 10px;
+            margin-left: auto;
+            a{
+                @extend .btn_rdn;
+            }
+        }
+    }
+    &_br{
+        @extend .br_trj;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.trj_pers_vrt {
+    /*tarjeta personal vertical*/
+
+    background-color:--color-primario-tr;
+    min-height: 150px;
+    margin-bottom: 2px;
+    text-align: center;
+    top: 2px;
+    overflow:hidden;
+    border: 2px solid rgba(175, 244, 255, 0.521);
+    box-shadow: 3px 3px 3px rgba(187, 246, 255, 0.521);
+    border-radius:3px;
+    padding: 2px 2px 2px 2px;  
+  }
+
+.trj_pry {
+    @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:1fr,$tam_fr2:45px,$tam_fr3:0fr);
+    position:relative;
+    width: 240px;
+    height: 360px;
+    border-radius: 5px;
+    background: linear-gradient(45deg, var(--color-blanco),var(--color-primario-tr));
+    border: 2px solid rgba(115, 204, 255, 0.521);
+    box-shadow: 5px 5px 5px var(--color-primario-oscuro);
+    overflow:auto;
+    align-self:center;
+    margin: auto;
+    &_simple{
+        @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:1fr,$tam_fr2:4fr,$tam_fr3:0fr);
+        overflow:hidden;
+        color: var(--color-blanco);
+        .cnt_sup{
+            @include extruc_gr_pn($num_col:2,$num_filas:1,$tam_fr1:1fr,$tam_fr2:1fr,$tam_fr3:0fr);
+            background: var(--color-primario);
+            &_img{
+                @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:4fr,$tam_fr2:1fr,$tam_fr3:0fr);
+                background: var(--color-primario);
+                &_base{
+                    color: var(--color-blanco);
+                }
+            }
+            &_titulo{
+                text-align: center;
+                color:var(--color-blanco);
+                text-align: center;
+            }
+        }
+        .cuerpo_pry{
+            @include extruc_gr_pn($num_col:1,$num_filas:1,$tam_fr1:1fr,$tam_fr2:0fr,$tam_fr3:0fr);
+            color: var(--color-primario-oscuro);
+            margin: 5px;
+            text-align: justify;
+            text-overflow: ellipsis;
+        }
+    }
+    &_cnt{
+        @include extruc_gr_pn($num_col:2,$num_filas:1,$tam_fr1:8fr,$tam_fr2:1fr,$tam_fr3:0fr);
+        &_ppal{
+            @include extruc_gr_pn($num_col:1,$num_filas:2,$tam_fr1:1fr,$tam_fr2:8fr,$tam_fr3:0fr);
+            .img_pry{
+                @include extruc_gr_pn($num_col:1,$num_filas:1,$tam_fr1:1fr,$tam_fr2:0fr,$tam_fr3:0fr);
+                align-items: center;
+                justify-items: center;
+                .img{
+                    @extend .circulo;
+                    position:relative;
+                }
+                .txt_img{
+                    position:relative;
+                    text-align: center;
+                }
+            }
+            .cnt_pry{
+                @include extruc_gr_pn($num_col:1,$num_filas:3,$tam_fr1:35px,$tam_fr2:12fr,$tam_fr3:35px);
+                height: 100%;
+                color: var(--color-primario-oscuro);
+                text-align:justify;
+                align-content: center;
+                padding: 5px;
+                a{
+                    @extend .btn_prm_cl;
+                    background: linear-gradient(-45deg, var(--color-primario),var(--color-primario-oscuro));
+                    height: 25px;
+                    justify-self:center;
+                    text-decoration: none;
+                    color: var(--color-primario-tr);
+                    font-size: small;
+                    font-family: var(--fam-fuentes-btn);
+                    &:hover{
+                        color: var(--color-blanco);
+                        background: linear-gradient(-45deg, var(--color-primario),var(--color-primario-oscuro));
+                    }
+                }
+                &_titulo{
+                    background:linear-gradient(-45deg, var(--color-primario-tr),var(--color-primario));
+                    display:flex;
+                    font-size: medium;
+                    align-self: flex-end;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    align-items:center;
+                    top:0px;
+                }
+                &_cmp{
+                    /* componenetes del contenido del proyecto */
+                    display:flex;
+                    text-align: justify;
+                    align-items:baseline;
+                    overflow:auto;
+                    gap: 10px;
+                }
+                &_pie{
+                    background:linear-gradient(-45deg, var(--color-primario-tr),var(--color-primario-oscuro));
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    text-align: justify;
+                    align-items: center;
+                    gap: 5px;
+                    bottom: 0px;
+                }
+            }
+        }
+        &_pie{
+            @extend .brr;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            position: relative;
+            width: auto;
+            background-color: var(--color-primario-oscuro);
+            align-items:center;
+            gap: 5px;
+            border-radius: 25px 0px 0px 25px;
+            padding-left: 10px;
+            margin-left: auto;
+            a{
+                @extend .btn_rdn;
+            }
+        }
+    }
+    &_br{
+        border-top-left-radius: 20px;
+        background: var(--color-primario-oscuro);
+        @include extruc_gr_pn($num_col:1,$num_filas:1,$tam_fr1:1fr,$tam_fr2:0fr,$tam_fr3:0fr);
+        overflow:hidden;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 100%;
+        padding: 3px;
+        align-items: center;
+        a{
+            color: var(--color-primario-tr);
+            display:inline-flex;
+            position: relative;
+            @extend .btn_rdn;
+            height: 25px;
+            width: 25px;
+            font-size: smaller;
+            i{
+                font-size: 22px;
+            }
+        }
+    }
+}

@@ -1,0 +1,179 @@
+/* sigepi.css: Botones del diseño*/
+.btn{
+    position:relative;
+    @include tam_igu(45px);
+    text-align: center;
+    margin: auto;
+    border-radius: 5px;
+    text-decoration: none;
+    box-sizing:content-box;
+    align-items: center;
+    align-content: center;
+}
+/* botón redondo */
+.btn_rdn{
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    @include tam_igu(35px);
+    text-align: center;
+    border-radius: 50%;
+    text-decoration: none;
+    align-items: center;
+    align-content: center;
+    text-underline-position: below;
+    box-shadow: 3px 3px 3px var(--color-primario-tr) inset;
+    margin: 5px;
+    i{
+        font-size: 30px;
+        color: var(--color-primario-2);
+        transition: 0.5s;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    span{
+        font-size: x-small;
+        display:none;
+        color: var(--color-blanco);
+    }
+    &:hover{
+        background-color: var(--color-blanco);
+        box-shadow: 3px 3px 10px var(--color-primario-oscuro) inset;
+        i{
+            font-size: 30px;
+            color: var(--color-primario);
+            transition: 0.5s;
+            align-self: center;
+            margin-left: auto;
+            margin-right: auto;
+            transform: translate(0%,7%);
+        }
+        span{
+            display:flex;
+            transform: translate(0%,-3px);
+            color: var(--color-primario-2);
+        }
+    }
+}
+
+.btn_pie {
+    background: linear-gradient(0deg,var(--color-primario-1), var(--color-primario));
+    width: 100%;
+    height: 100%;
+    position:relative;
+    border-left: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2%;
+    padding: 0px;
+    color: var(--color-primario-2);
+    transform: translate(0%,0%);
+    box-shadow: 0 5px 5px rgba(0, 17, 54, 0.267);
+    text-decoration: none;
+    transition: 0.3s;
+    text-align: center;
+}
+/* boton primario claro (azul) */
+.btn_prm_cl {
+    @extend .btn;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    width:100%;
+    box-shadow: 2px 2px 5px var(--color-primario);
+    background: linear-gradient(0deg,var(--color-blanco), var(--color-primario-tr));
+    transition: 0.3s;
+    text-decoration: none;
+    text-align: center;
+    text-underline-position: below;
+    &:hover {
+        border-left: 1px solid var(--color-primario-tr);
+        background: linear-gradient(0deg,var(--color-primario-tr),var(--color-blanco) );
+        box-shadow: 0px 2px 2px rgba(241, 245, 255, 0.514);
+        transform: translate(0%,-3%);
+        i{
+            font-size: 30px;
+            color: var(--color-primario-1);
+            transition: 0.5s;
+        }
+        span{
+            display:flex;
+            position: relative;
+            color: var(--color-primario-1);
+            font-size: smaller;
+            top: -5px;
+        }
+    }
+    i {
+        font-size: 40px;
+        color: var(--color-primario);
+        transition: 0.5s;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    span{
+        display:none;
+    }
+    .deshab {
+        border-left: 1px solid var(--color-gris);
+        background: linear-gradient(0deg,var(--color-primario-tr),var(--color-gris) );
+        box-shadow: 0 2px 2px rgba(95, 95, 95, 0.15);
+        transform: translate(0%,-3%);
+        font-size: 30px;
+        color: var(--gris);
+        transition: 0.5s;
+        padding: auto;
+    }
+}
+
+/* boton secundario claro (verde) */
+.btn_sec_cl {
+    @extend .btn;
+    background-color: var(--color-blanco);
+    box-shadow: 0 2px 2px rgba(0, 54, 33, 0.267);
+    background: linear-gradient(0deg,var(--color-blanco), var(--color-secundario));
+    transition: 0.3s;
+    &:hover {
+        border-left: 1px solid var(--color-blanco);
+        background: linear-gradient(0deg,var(--color-secundario-tr),var(--color-blanco) );
+        box-shadow: 0 2px 2px rgba(241, 245, 255, 0.514);
+        transform: translate(0%,-3%);
+    }
+    i {
+        font-size: 30px;
+        color: var(--color-secundario);
+        transition: 0.5s;
+        padding: auto;
+        &:hover{
+        font-size: 27px;
+        color: var(--color-secundario-1);
+        transition: 0.5s;
+        padding:2px;
+        }
+    }
+    .deshab {
+        border-left: 1px solid var(--color-gris);
+        background: linear-gradient(0deg,var(--color-secundario-tr),var(--color-gris) );
+        box-shadow: 0 2px 2px rgba(95, 95, 95, 0.15);
+        transform: translate(0%,-3%);
+        font-size: 30px;
+        color: var(--color-gris);
+        transition: 0.5s;
+        padding: auto;
+    }
+}
+
+.btn_menu{
+    display: flex;
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border-radius: 2px;
+    border:0px;
+    transition: 0.5s ease;
+}
+
+.btn_cerrar{
+    @extend .btn_menu;
+    display: none;
+}
