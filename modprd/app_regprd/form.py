@@ -13,46 +13,30 @@ class form_prd(forms.ModelForm):
     class Meta:
         model = prd_base
         fields = (
-            'nombre_prd',
+            'nom_prd',
             'fech_entrega',
-            'id_pry',
-            'id_us',
+            'ids_pry',
+            'ids_usu',
         )
         labels ={
-            'nombre_prd': 'Nombre del producto',
+            'nom_prd': 'Nombre del producto',
             'fech_entrega': 'Fecha de entrega estimada',
-            'id_pry': 'Proyecto de referencia',
-            'id_us': 'Propietario del producto',
-        }
-
-class form_prd(forms.ModelForm):
-    class Meta:
-        model = prd_base
-        fields = (
-            'nombre_prd',
-            'fech_reg',
-            'id_pry',
-            'id_us',
-        )
-        labels ={
-            'nombre_prd': 'Nombre del producto',
-            'fech_reg': 'Fecha de registro del producto',
-            'id_pry': 'Proyecto de referencia',
-            'id_us': 'Propietario del producto',
+            'ids_pry': 'Proyecto de referencia',
+            'ids_usu': 'Propietario del producto',
         }
 
 class form_reg_prd(forms.ModelForm):
     class Meta:
         model = prd_base
         fields = (
-            'nombre_prd',
+            'nom_prd',
             'fech_entrega',
-            'id_pry',
-            'id_us',
+            'ids_pry',
+            'ids_usu',
         )
         labels ={
-            'nombre_prd': 'Nombre del producto',
+            'nom_prd': 'Nombre del producto',
             'fech_entrega': 'Fecha de entrega estimada',
-            'id_pry': 'Proyecto de referencia',
-            'id_us': 'Propietario del producto',
+            'ids_pry': 'Proyecto de referencia',
+            'ids_usu': 'Propietario del producto',
         }
