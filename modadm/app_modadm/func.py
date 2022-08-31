@@ -6,21 +6,41 @@
 #Fecha: 19/08/22
 #CoAutor: Brallan Andres Laverde Perez ORCID:0000-0002-6173-0301
 
+from operator import iconcat
+from sqlite3 import IntegrityError
 import sys,ast,os
 import logging
 from urllib import request
 from django.db import models, utils
 from django.contrib.auth.models import Group, User
-from modadm.app_modadm.dic import TIPO_APP
-from modadm.app_modadm.models import adm_app, adm_mod, adm_rol
+from modadm.app_modadm.models import adm_app, adm_func, adm_mod, adm_rol
 from django.apps import apps
 
 
+INF_FUNC=[
+    {"nom_func":'reg_mod',"desc_func":'Aplicacion que registra en el modelo mod_adm los modulos descritos en Sigepi',"url_loc":'#',"com_exc":'sys_mod.reg_mod()',"context":'Registrar modulos',"ico":'Source'},
+
+    {"nom_func":'ext_var',"desc_func":'Función que devuelve un variable de un archivo de python sin ejecutarlo',"url_loc":'#',"com_exc":'sys_utils.ext_var()',"context":'Extraer variable',"ico":'DataArray'},
+
+    {"nom_func":'comp_ver',"desc_func":'Función que compara dos versiones devuelve TRUE si v1 > v2 si no FALSE ',"url_loc":'#',"com_exc":'sys_utils.comp_ver()',"context":'Comparar versiones',"ico":'Balance'},
+
+    {"nom_func":'val_mod',"desc_func":'Función que devuelve el número de modulos registrados en el modelo adm_mod',"url_loc":'#',"com_exc":'sys_mod.val_mod()',"context":'Validar existencia del modulo',"ico":'Pageview'},
+
+    {"nom_func":'reg_app',"desc_func":'Función que extrae la informacion de INF_APP y la registra en los modelos ',"url_loc":'#',"com_exc":'sys_app.reg_app()',"context":'Registrar aplicaciones',"ico":'AppShortcut'},
+
+    {"nom_func":'val_inst_app',"desc_func":'Funcion que devuelve un True si se han hecho las migraciones de la aplicacion dada como parametro de entrada',"url_loc":'#',"com_exc":'sys_app.val_inst_app()',"context":'Registrar aplicaciones',"ico":'AppShortcut'},
+
+    {"nom_func":'val_app',"desc_func":'Funcion que devuelve un True si existe una aplicación con el nombre dado como parametro de entrada',"url_loc":'#',"com_exc":'sys_app.val_app(nom)',"context":'Validar aplicación',"ico":'SystemSecurityUpdateGood'},
+    
+    {"nom_func":'reg_roles',"desc_func":'Funcion que extrae los roles definidos en la listas ROL_APP y los almacena en el modelo modadm_rol',"url_loc":'#',"com_exc":'sys_rol.reg_roles()',"context":'Registrar Roles',"ico":'PersonSearch'}
+
+]
 
 
 #Clase con algoritmos utiles para el funcionamiento de func.py
 class sys_utils():
 
+    
     # extraer variables de python sin ejecutar el script, requiere la ubicacion del archivo y nombre de variable
     def ext_var(mod_path, variable, default=None, *, raise_exception=False):
         ModuleType = type(ast)
@@ -131,47 +151,51 @@ class sys_app():
                             
                             campos=[f.name for f in adm_app._meta.get_fields()]
                             dic=sys_utils.ext_var("./modadm/app_modadm/dic.py","TIPO_APP")
+                            
+                            dict_val = {}
 
                             for i in range(len(campos)):
                                 for j in range(len(inf_app)):
                                     if(campos[i]==inf_app[j][0]):
-                                        globals()[campos[i]]=inf_app[j][1]
+                                        dict_val[campos[i]]=inf_app[j][1]
                                         break
                                     else:
-                                        globals()[campos[i]]=None
+                                        dict_val[campos[i]]=None
                                         
                                         
                             for i in range(len(dic)):
-                                if tipo_app == (dic[i])[1]:
-                                    globals()["tipo_app"] = (dic[i])[0]
+                                if dict_val["tipo_app"] == (dic[i])[1]:
+                                    dict_val["tipo_app"] = (dic[i])[0]
+                                    
 
 
                             id_mod=inf_mod.get('id_mod')   
                                
-                            p=adm_app(nom=nom,titulo=titulo,desc=desc,url_doc=url_doc,url_instal=url_instal,url_pl=url_pl,nom_url=nom_url,version=version,ver_mod=ver_mod,activo=activo,instalada=instalada,visible=visible,externa=externa,tipo_app=tipo_app,ico=ico,id_mod_id=id_mod)
+                            p=adm_app(nom=dict_val["nom"],titulo=dict_val["titulo"],desc=dict_val["desc"],url_doc=dict_val["url_doc"],url_instal=dict_val["url_instal"],url_pl=dict_val["url_pl"],nom_url=dict_val["nom_url"],version=dict_val["version"],ver_mod=dict_val["ver_mod"],activo=dict_val["activo"],instalada=dict_val["instalada"],visible=dict_val["visible"],externa=dict_val["externa"],tipo_app=dict_val["tipo_app"],ico=dict_val["ico"],id_mod_id=id_mod)
                             
-                            if(sys_app.val_app(nom)):
-                                act_ver = (adm_app.objects.filter(nom=nom).values().order_by("-id_app"))[0].get('version')
-                                if sys_utils.comp_ver(act_ver,version):
+                            if(sys_app.val_app(dict_val["nom"])):
+                                act_ver = (adm_app.objects.filter(nom=dict_val["nom"]).values().order_by("-id_app"))[0].get('version')
+                                if sys_utils.comp_ver(act_ver,dict_val["version"]):
                                     try:
                                         p.save()
-                                        respuesta+="<p>El aplicativo ["+nom+"] ha sido registrado con version "+version+" version anterior "+act_ver+"</p>"
+                                        respuesta+="<p>El aplicativo ["+dict_val["nom"]+"] ha sido registrado con version "+dict_val["version"]+" version anterior "+act_ver+"</p>"
                                     except utils.IntegrityError:
-                                        respuesta+="<p>Faltan datos o son erroneos para el registro del modulo, ERROR DE INTEGRIDAD, el aplicativo ["+nom+"] NO se registro</p>"
+                                        respuesta+="<p>Faltan datos o son erroneos para el registro del modulo, ERROR DE INTEGRIDAD, el aplicativo ["+dict_val["nom"]+"] NO se registro</p>"
 
                                 else:
-                                    respuesta+="<p>Ya se encuentra registrada["+nom+"] con una version igual o superior,el aplicativo ["+nom+"] NO se registro</p>"
+                                    respuesta+="<p>Ya se encuentra registrada["+dict_val["nom"]+"] con una version igual o superior,el aplicativo ["+dict_val["nom"]+"] NO se registro</p>"
                             else:
                                 try:
                                     p.save()
-                                    respuesta+="<p>El aplicativo ["+nom+"] ha sido registrado</p>"
+                                    respuesta+="<p>El aplicativo ["+dict_val["nom"]+"] ha sido registrado</p>"
                                 except utils.IntegrityError:
-                                    respuesta+="<p>Faltan datos o son erroneos para el registro del modulo, ERROR DE INTEGRIDAD, el aplicativo ["+nom+"] NO se registro</p>"
+                                    respuesta+="<p>Faltan datos o son erroneos para el registro del modulo, ERROR DE INTEGRIDAD, el aplicativo ["+dict_val["nom"]+"] NO se registro</p>"
 
                              
                     else:
                         respuesta+="<p>se encontraron datos en los modelos de aplicacion ["+nom_app+"] pero el el modulo no ha sido instalado</p>"
-                    
+
+
         return respuesta           
                             
     #validar migracion
@@ -188,52 +212,58 @@ class sys_app():
 class sys_rol():
 
     #crea roles en el administrador de DJANGO a partir de un nombre tipo String
-   
-        
     #verificar la existencia de un rol en el administrador de DJANGO por su nombre
-    def val_rol(nom):
-        x =Group.objects.filter(name=nom).count()
-        if x == 1:
-            return True
-        else:
-            return False
-
-    #Eliminar roles de aplicación
-    def quitar_rol(nom):
-        if Self.val_rol(nom):
-            print("Ya existe el rol "+nom+" registrado en el administrador")
-        else:
-            Group.objects.filter(name=nom).delete()
-    
     #Actualiza los roles en el administrador de DJANGO sean nuevos, editados o removidos por una accion con la aplicación 
    
                 
 
     #extrae listados de nombres de roles contenidos en los archivos models.py de las apps incluidas en SIGEPI
     def reg_roles():
+
+        respuesta = "<h5>Registro de roles</h5>"
+
         for dirname, dirnames, filenames in os.walk('.'):
             for filename in filenames:
                 ubicacion = os.path.join(dirname,filename)
                 if ubicacion[-9:]=='models.py':
-                    lista_roles=sys_utils.ext_var(ubicacion[2:],"ROL_APP")
-                    if lista_roles==None:
-                        lista_roles=sys_utils.ext_var(ubicacion[2:],"ROL_BASE")
+                  
+                    lista_roles = sys_utils.ext_var(ubicacion[2:],'ROL_APP')
+                                
+                    if lista_roles != None:
                         nom_mod=ubicacion.split("/")[-3]
                         nom_app=ubicacion.split("/")[-2]
-
+                        
                         id_mod=(adm_mod.objects.filter(nom=nom_mod).order_by("-id_mod").values()[0]).get('id_mod')
                         id_app=(adm_app.objects.filter(nom=nom_app).order_by("-id_app").values()[0]).get('id_app')
-
+                        
                         for i in range(len(lista_roles)):
+                            
+                            print((lista_roles[i])[1])
+                            grupo = Group(name=(lista_roles[i])[1])
+                            p=adm_rol(id_gru=grupo,etq_rol=(lista_roles[i])[0],desc=(lista_roles[i])[1],req_reg=(lista_roles[i])[2],id_app_id=id_app,id_mod_id=id_mod,tipo=(lista_roles[i])[3])  
 
-                            p=adm_rol(etq_rol=(lista_roles[i])[0],desc=(lista_roles[i])[1],req_reg=(lista_roles[i])[2],id_app_id=id_app,id_mod_id=id_mod,tipo=(lista_roles[i])[3])
+                            if Group.objects.filter(name=(lista_roles[i])[1]).count()>0:
+                                respuesta +=("<p>ERROR: El Rol ["+str((lista_roles[i])[1])+"] de la aplicación ["+nom_app+"] tiene conflictos con un rol del mismo nombre, ATRIBUTO UNICO!</p>")
+                            else:
+                                try:
+                                    grupo.save()
+                                    p.save()
+                                    respuesta +=("<p> El Rol ["+str((lista_roles[i])[1])+"] de la aplicación ["+nom_app+"] ha sido registrado</p>")
+                                except utils.IntegrityError:
+                                    respuesta +=("<p>ERROR: El Rol ["+str((lista_roles[i])[1])+"] de la aplicación ["+nom_app+"] presento errores de integridad</p>") 
+                        
+        return respuesta
 
-                            p.save()
+
+
+def rutina_prueba():
+    a=''
+    a+=sys_mod.reg_mod()
+    a+=sys_app.reg_app()
+    a+=sys_rol.reg_roles()
+    print(a)
+    return a
     
-        return 
-
-
-        
 
 #Clase para gestionar permisos en el administrador de DJANGO
 class sys_perm():
@@ -247,13 +277,6 @@ class sys_perm():
 
 
 #sys_mod.val_mod("Módulo de Administración SIGEPI","modadm")
-#sys_rol.reg_roles()
-def rutina_prueba():
-    respuesta = ''
-    respuesta+=sys_mod.reg_mod()
-    respuesta+=sys_app.reg_app()
-    return respuesta
-
 
 
 
@@ -264,6 +287,48 @@ def rutina_prueba():
 #desistalar Módulo externo
 
 # clase para facilitar la migración automática según las dependencias del modelo base
+class sys_func():
+    def reg_func():
+        for dirname, dirnames, filenames in os.walk('.'): 
+            for filename in filenames:
+                ubicacion = os.path.join(dirname,filename)
+
+                #Solo se trabajan con aquellos archivos cuyo fichero terminen en func.py  
+                if ubicacion[-7:]=='func.py': 
+                    inf_func=sys_utils.ext_var(ubicacion[2:],"INF_FUNC")#Busca la lista INF_FUNC utilizado el extractor de variables
+
+                    #El fichero contiene una diccionario INF_FUNC?
+                    if inf_func!= None:
+
+                        #Recorrer INF_FUNC donde cada elemento es una función
+                        for i in range(len(inf_func)):
+
+                            func=inf_func[i]
+
+                            #Obtencion de la ruta de la función
+                            lib_func=ubicacion
+                            nom_app=ubicacion.split("/")[-2]
+
+                            #Información suministrada por el usuario
+                            nom_func=func['nom_func']
+                            url_loc=func['url_loc']
+                            com_exc=func['com_exc']
+                            context=func['context']
+                            ico=func['ico']
+                            desc_func=func['desc_func']
+                            id_app=(adm_app.objects.filter(nom=nom_app).order_by("-id_app").values()[0]).get('id_app')
+
+                            if adm_func.objects.filter(nom_func=nom_func,lib_func=lib_func).exists():
+                                print("LA FUNCION YA ESTA REGISTRADA")
+                            else:
+                                p=adm_func(nom_func=nom_func,url_loc=url_loc,com_exc=com_exc,context=context,ico=ico,lib_func=lib_func,id_app_id=id_app,desc_func=desc_func)
+                                p.save()
+                  
+        return 
+
+rutina_prueba()
+sys_func.reg_func()
+
 # Funciones pendientes
 #registrar funciones de aplicación
 #modificar funciones de aplicación
