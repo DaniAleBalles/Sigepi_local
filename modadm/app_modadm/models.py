@@ -8,7 +8,7 @@ import datetime
 from django.utils import timezone
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import AbstractUser, User
-#from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.models import ContentType
 
 #Diccionario de información de instalación de aplicación
 INF_APP = [
