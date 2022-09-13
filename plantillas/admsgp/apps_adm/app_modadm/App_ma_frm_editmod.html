@@ -1,0 +1,21 @@
+{% extends 'inicio_adm.html' %}
+{% block titulo %} Vista de detalle de Modulo{% endblock titulo %} 
+{% block app %}
+{% block cuerpo %}
+
+
+<form method="POST">
+
+    <div class="vista detalle">
+        {% csrf_token %}
+
+        {{ form.as_ul}}
+        
+       <input type="submit">Editar</input>
+        
+
+    </div>
+</form>
+
+{% endblock cuerpo %}
+{% endblock app%}

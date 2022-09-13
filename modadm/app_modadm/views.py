@@ -1,24 +1,27 @@
+#from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.template import Template,Context,loader
 from django.core import serializers
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+
+
 #from rest_framework import viewsets
 from .models import *
 from .form import *
 from modcons.app_cons.form import *
-#from .func import rutina_prueba, sys_app, sys_mod, sys_rol
+from .func import rutina_prueba, sys_app, sys_mod, sys_rol
 #from .roles import roles
 
 #Clase que presenta la portada del administrador de SIGEPI.
-class portada_adm():
+class portada_adm(LoginRequiredMixin, PermissionRequiredMixin):
     #función para plantilla de inicio
     def vst_inicio(self,solicitud):
         return render(solicitud,"base_cons.html")
@@ -33,40 +36,58 @@ class portada_adm():
         plt=loader.get_template('inicio_adm.html')
         respuesta=plt.render()
         return HttpResponse(respuesta)
+       
     
     def vst_instal_mods(self, solicitud):
-        respuesta= '' #rutina_prueba()
+        respuesta= rutina_prueba()
         return HttpResponse(respuesta)
         
-    
-
 ##CRUD de módulo ##
 #Vista de registro de módulos nuevos en el sistema
 class vts_reg_mod(CreateView, PermissionRequiredMixin):
     model = adm_mod
     form_class = frm_mod
-    template_name = 'app_ma_frm_nvo_mod.html'
-    success_url = reverse_lazy('consulta_modulos')
+    template_name = 'App_ma_frm_nvo_mod.html'
+    success_url = reverse_lazy('cons_mod')
     success_message = 'El modelo fue creado satisfactoriamente'
-    permission_required = 'mod.add_mod'   
+    permission_required = 'mod.add_mod'
+
+    def get_object(self):
+        print("sssssss")
+    
+    
+
+
+#Vista de detalle de un módulo registrado en el sistema 
+class vts_ver_mod(DetailView, PermissionRequiredMixin):
+    model = adm_mod
+    form_class = frm_mod
+    template_name = 'cn_esp_mod.html'
+    success_url = reverse_lazy('cons_mod')
+    success_message = 'Detalles cargados correctamente'
+    permission_required = 'view_adm_mod'
+   
 
 #Vista de listado de módulos registrados en el sistema
-class vts_ls_mod(ListView, PermissionRequiredMixin): #hereda de listwview
+class vts_ls_mod(LoginRequiredMixin, PermissionRequiredMixin, ListView): #hereda de listwview
     #información de las personas
     model = adm_mod
     form_class = frm_mod
     template_name = 'cn_mod.html'
     success_url = reverse_lazy('cn_mod.html')
     success_message = 'Listado cargado correctamente'
-    permission_required = 'mod.view_mod' 
+    permission_required = 'app_modadm.view_adm_mod'
+    login_url = 'localhost:8000/ingreso' 
 
 #Vista de edición o modificación de módulos registrados en el sistema
-class vts_edt_mod(UpdateView, PermissionRequiredMixin):
+class vts_edt_mod(UpdateView):
     model = adm_mod
     form_class = frm_mod
-    template_name = 'app_ma_frm_nvo_mod.html'
-    success_url = reverse_lazy('consulta_modulos')
-    permission_required = 'mod.change_mod' 
+    template_name = 'App_ma_frm_editmod.html'
+    success_url = reverse_lazy('cons_mod')
+    permission_required = 'mod.change_mod'
+    
+
     
 #Vista de eliminación o borrado de módulos en el sistema
 class vts_elim_mod(DeleteView, PermissionRequiredMixin):
@@ -81,26 +102,36 @@ class vts_elim_mod(DeleteView, PermissionRequiredMixin):
 class vts_reg_app(CreateView, PermissionRequiredMixin):
     model = adm_app
     form_class = frm_cons_app
-    template_name = 'app_ma_frm_crearapp.html'
-    success_url = reverse_lazy('consulta_aplicaciones_modulos')
+    template_name = 'App_ma_frm_crearapp.html'
+    success_url = reverse_lazy('App_ma_frm_crearapp.html')
     success_message = 'La aplicacion de modulos fue creada satisfactoriamente'
     permission_required = 'adm_mod.add_adm_mod'
 
 #Vista del listado de aplicaciones registradas en el sistema
 class vts_ls_app(ListView, PermissionRequiredMixin): #hereda de listwview
-    model = adm_mod
+    model = adm_app
     form_class = frm_cons_app
-    template_name = 'cn_app.html'
-    success_url = reverse_lazy('cn_app.html')
+    template_name = 'cn_app_mod.html'
+    success_url = reverse_lazy('cn_app_mod.html')
     success_message = 'Listado cargado correctamente'
     permission_required = 'adm_mod.view_adm_mod'
 
+
+#Vista de detalle de un módulo registrado en el sistema 
+class vts_ver_app(DetailView, PermissionRequiredMixin):
+    model = adm_app
+    form_class = frm_cons_app
+    template_name = 'cn_esp_app_mod.html'
+    success_url = reverse_lazy('cn_esp_app_mod.html')
+    success_message = 'Detalles cargados correctamente'
+    permission_required = 'view_adm_mod'
+
 #Vista de edición o modificación de aplicaciones registradas en el sistema
 class vts_edt_app(UpdateView, PermissionRequiredMixin):
-    model = adm_mod
+    model = adm_app
     form_class = frm_cons_app
-    template_name = 'app_ma_frm_crearapp.html'
-    success_url = reverse_lazy('consulta_aplicaciones_modulos')
+    template_name = 'App_ma_frm_editapp.html'
+    success_url = reverse_lazy('App_ma_frm_editapp.html')
     permission_required = 'adm_mod.change_adm_mod'
 
 #Vista de eliminación o borrado de aplicaciones en el sistema
@@ -136,7 +167,7 @@ class vts_edt_rol(UpdateView, PermissionRequiredMixin):
     model = adm_rol
     form_class = frm_cons_rol
     template_name = 'app_ma_frm_crearrol.html'
-    success_url = reverse_lazy('consulta_rol')
+    success_url = reverse_lazy('cons_rol/')
     permission_required = 'adm_rol.change_adm_rol'
     
 #Vista de eliminación de registro de roles en el sistema
