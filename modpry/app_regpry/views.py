@@ -44,7 +44,7 @@ class vst_ls_pry(ListView):
     context_object_name = 'lista_pry'
 
     def get_queryset(self):
-        return pry_base.objects.filter(id_usu = self.request.user).filter(pry_archi=0)
+        return pry_base.objects.all()
 
 class vts_edit_pry(UpdateView):
     #Clase de la vista para actualizar el registro de un proyecto 
