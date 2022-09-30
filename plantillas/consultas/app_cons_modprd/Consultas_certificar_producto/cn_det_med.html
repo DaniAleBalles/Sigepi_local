@@ -4,7 +4,7 @@
 #fecha 23 -09 -2022 --->
 
 
-{% extends 'app_regprd_iu.html' %} 
+{% extends 'app_regmed_iu.html' %} 
 {% load static %}
 {% block meta_app %}{% endblock meta_app%}
 {% block meta_panel_ppal %}{% endblock meta_panel_ppal%}
@@ -13,14 +13,16 @@
 {% block articulo %} 
 
 <div>
-    <p>Consulta las mediciones</p>
+    <p>Consulta de la medicion </p>
 </div>
 
 {% if form.errors %}
     <p>No se ha podido realizar la consulta en este momento, porfavor intentelo mas tarde.</p>
 {% endif %}
 
-<!--CONSULTAR UN ESTADO DE MEDICION-->
+    {% if prd_med %}
+
+    <!--CONSULTAR UN ESTADO DE MEDICION-->
 
     <table>
         <thead>
@@ -37,8 +39,8 @@
 
             </tr>
         </thead>
-        <tbody>
-            {% for prd_med in object_list %}
+         <tbody>
+
                 <tr>
 
                     <td> {{ prd_med.id_med }} </td> 
@@ -48,17 +50,30 @@
                     <td>  {{ prd_med.fch_fin}} </td> 
                     <td>  {{ prd_med.url_doc}} </td> 
                     <td>  {{ prd_med.url_resul}} </td> 
+                    <td>  {{ prd_med.est_med}} </td> 
 
                 </tr>
-            {% endfor %}
+    
         </tbody>
+    
     </table>
 
-    <a href="{% url 'listar_prd' %}">
-        <button type="submit" name="Back" >
-            Volver
-        </button>
-    </a>  
+        <a href="{% url 'listar_prd' %}">
+            <button type="submit" name="Back" >
+                Volver
+            </button>
+        </a>  
+
+        <a href="{% url 'editar_med' prd_med.id_med %}">
+            <button type="submit" name="Back" >
+                Actualizar Medicion
+            </button>
+        </a>  
+
+{% else %}
+    <span> xd </span>
+{% endif %}
+
 
 {% endblock articulo %}
 {% endblock consulta %}
