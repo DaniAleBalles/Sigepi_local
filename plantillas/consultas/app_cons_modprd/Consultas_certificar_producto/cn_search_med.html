@@ -1,0 +1,94 @@
+<!--- Plantilla para la vista del tipo de producto buscado - plantillas para SIGEPI
+#Autor: Daniel Alejandro Ballesteros Algarra
+# Coautor(a):  Milton O. Castro Ch.
+#fecha 4 -10 -2022 --->
+
+{% extends 'app_regtipo_iu.html' %} 
+{% load static %}
+{% block meta_app %}{% endblock meta_app%}
+{% block meta_panel_ppal %}{% endblock meta_panel_ppal%}
+{% block meta_pie_app%}{% endblock meta_pie_app%}
+{% block consulta %}
+{% block articulo %}
+
+
+<div>
+    <p>
+        Listado de tipos
+        <form method="POST" action="{%url 'buscar_tipo' %}">
+            {% csrf_token %}
+            <input type="search" placeholder="Buscar" name="buscar">
+            <button type="submit">
+                Buscar
+            </button>
+        </form>
+    </p>
+</div>
+
+{% if form.errors %}
+    <p>No se ha podido realizar la consulta en este momento, porfavor intentelo mas tarde.</p>
+{% endif %}
+
+<!--CONSULTAR UN TIPO DE PRODUCTO-->
+{% if not Buscar %}
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>  
+                <th> Nombre del tipo de producto:</th>  
+            </tr>
+        </thead>
+        <tbody>
+            {% for prd_tipo in tipo %}
+
+            {% if prd_tipo.archivo %}
+
+                <tr>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td> {{ prd_tipo.id_tipo}} </td> 
+                    <td>
+                        
+                        <a href="{% url 'consultar_tipo' prd_tipo.id_tipo %}"> 
+                            {{ prd_tipo.nom_tipo}}
+                         </a> 
+
+                        <a href="{% url 'editar_tipo' prd_tipo.id_tipo %}">
+                            <button type="submit" name="Editar" >
+                                Editar
+                            </button>
+                        </a>
+
+                        <a href="{% url 'eliminar_tipo' prd_tipo.id_tipo %}">
+                            <button type="submit" class = "btm btn-danger" name="Eliminar" >
+                                Eliminar
+                            </button>
+                        </a>
+
+                    </td> 
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %} 
+
+    <span>
+        el tipo de producto no existe
+    </span>
+                
+{%endif %}
+
+
+{% endblock articulo %}
+{% endblock consulta %}
+
+
+{% block script_app%}{% endblock script_app%}
+{% block script_menu_app%}{% endblock script_menu_app%}
+{% block script_pie_app%}{% endblock script_pie_app%}
+

@@ -79,7 +79,7 @@ urlpatterns = [
     # consultas módulo de productos
     path('prd/', include('modprd.app_modprd.urls')),
     path('prd/', include('modprd.app_regprd.urls')),
-    path('certprd/', include('modprd.app_certprd.urls')),
+    path('certprd/', include('modprd.app_certprd.urls')),   
 ]
 
 urlpatterns += staticfiles_urlpatterns()
