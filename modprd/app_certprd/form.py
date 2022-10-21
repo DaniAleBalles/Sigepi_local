@@ -73,22 +73,22 @@ class form_supp(forms.ModelForm):
             'url_supp': 'Documentacion del soporte',
         }
     
-class form_etp(forms.ModelForm):
-    class Meta:
-        model = prd_etp
-        fields = (
-            'nom_etp',
-            'desc_etp',
-            'id_prd',
-            'esc_trl',
+# class form_etp(forms.ModelForm):
+#     class Meta:
+#         model = prd_etp
+#         fields = (
+#             'nom_etp',
+#             'desc_etp',
+#             'id_prd',
+#             'esc_trl',
 
-        )
-        labels ={
-            'nom_etp': 'Nombre de la etapa',
-            'desc_etp': 'Descripción de la etapa',
-            'id_prd': 'Producto relacionado',
-            'esc_trl': 'Escala de maduracion tecnologica',
-        }
-        widgets = {
+#         )
+#         labels ={
+#             'nom_etp': 'Nombre de la etapa',
+#             'desc_etp': 'Descripción de la etapa',
+#             'id_prd': 'Producto relacionado',
+#             'esc_trl': 'Escala de maduracion tecnologica',
+#         }
+#         widgets = {
 
-        }
+#         }
