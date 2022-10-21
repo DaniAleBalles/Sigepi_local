@@ -5,7 +5,7 @@
 
 from msilib.schema import Class
 from re import X
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from modprd.app_certprd.form import *
 from django.urls import reverse_lazy
@@ -221,84 +221,6 @@ def vst_search_cert( request):
         return render(request, 'cn_search_cert.html', {})
 
 
-    #----------VISTAS PARA EL REGISTRO DE ETAPAS SIGEPI------------
-
-#Vista para el registro de etapa
-
-class vst_reg_etp(CreateView):
-    model= prd_etp
-    form_class = form_etp
-    template_name ='mod_cert_frm_registrar_etp.html'
-    success_url = reverse_lazy('listar_etp')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Registrar etapa'
-        context['action'] = 'Create'
-        return context
-
-#Vista para la consulta de las etapas
-
-class vst_cons_etp(DetailView):
-    model= prd_etp
-    template_name ='cn_det_etp.html'   
-    success_url = reverse_lazy('listar_etp')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Consulta de etapa'
-        context['action'] = 'Consulte'
-        return context
-
-
-#Vista para la edicion de una etapa
-
-class vst_upd_etp(UpdateView):
-    model= prd_etp
-    form_class = form_etp
-    template_name ='mod_cert_editar_etp.html'
-    success_url = reverse_lazy('consultar_etp')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Editar etp'
-        context['action'] = 'update'
-        context ['entity'] = 'cert'
-        return context
-
-#Vista para la eliminacion de una etapa
-
-class vst_del_etp(DeleteView):
-    model = prd_cert
-    template_name ='mod_cert_eliminar_etp.html'
-    success_url = reverse_lazy('listar_med')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Eliminacion de etapa'
-        context['action'] = 'Delete'
-        return context
-
-#Vista para la archivacion de certificacions
-
-class vst_archi_cert(TemplateView):
-    model = prd_cert
-    template_name ='mod_cer_eliminar_cert.html'
-    success_url = reverse_lazy('listar_cert')
-
-    def post(self,request,id):
-        etp= prd_etp.objects.get(id_etp=id)
-        if request.method == 'POST':
-            etp.archivo= True
-            etp.save()
-        return HttpResponseRedirect(self.success_url)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'archivar etapa'
-        context['action'] = 'Archivar'
-        return context
-
 #Vista para la busqueda de etapa
 
 def vst_search_etp( request):
@@ -313,27 +235,21 @@ def vst_search_etp( request):
     else:
         return render(request, 'cn_search_etp.html', {})
 
+    
+
 #Vista para el registro de soportes para el cerificado de un producto
 
-class vst_reg_supp(CreateView):
-    model= supp_cert
-    form_class= form_supp
-    template_name = 'mod_cert_frm_registrar_supp.html'
-    success_url = reverse_lazy('listar_med')
+def vst_reg_supp(request, id) :
+    data ={
 
-    def post(self,request) :
-        
-        super(vst_reg_supp, self).post(request)   
-        form= self.form_class(request.POST)
+        'form' : form_supp()   
 
-        if request.method == 'POST':   
-            supp = prd_cert.objects.latest('id_cert').update(id_soporte_value= supp_cert.objects.latest('id_soporte'))
-            supp.save()
+    }
+    cert= prd_cert.objects.get(id_cert=id)
+    if request.method == 'POST':
+        url= request.POST['url_supp']
+        supp_cert.objects.create(url_supp=url, id_cert=cert)
+        return redirect('/certprd/listmed')
 
-        return HttpResponseRedirect(self.success_url)
+    return render (request, 'mod_cert_frm_registrar_supp.html',data)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Añadir Soporte'
-        context['action'] = 'Create'
-        return context

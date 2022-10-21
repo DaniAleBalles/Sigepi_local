@@ -17,7 +17,7 @@
           <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <a href="">
+            <a href="{%url 'listar_med' %}">
                 <button type="submit" name="Crear" >
                     Añadir
                 </button>

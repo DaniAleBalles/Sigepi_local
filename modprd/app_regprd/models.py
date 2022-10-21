@@ -11,8 +11,6 @@ from modadm.app_modadm.dic import *
 from modpry.app_regpry.models import *
 
 
-
-
 DIC_APP = [
     #Diccionario de la aplicacion
 
@@ -119,31 +117,33 @@ class prd_base(models.Model):
     id_rl_prd_campos=models.ForeignKey (rl_prd,null=True,blank=False, on_delete=models.SET_NULL, db_constraint=True)#Identificador del campo de descripcion del producto
     archivo=models.BooleanField('Archivo del registro'  , blank=True,null=False, default=0) #Estado de archivo del registro
 
+# ---------CLASES PARA LOS CAMPOS MANY TOMANY--------------
 
+#Clase para la relacion de productos y proyectos 
 
 class m2m_pry(models.Model):
     producto_id=models.ForeignKey(prd_base,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
     proyecto_id=models.ForeignKey(pry_base,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
 
-
+#Clase para la relacion de productos y usuarios
 
 class m2m_user(models.Model):
     producto_id=models.ForeignKey(prd_base,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
     usuario_id=models.ForeignKey(User,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
 
-
+#Clase para la relacion de requerimientos de calidad y categorias
 
 class m2m_reqcal(models.Model):
     requerimiento_cal_id=models.ForeignKey(prd_req_cal,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
     categoria_id=models.ForeignKey(prd_categ,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
 
-    
+#Clase para la relacion de campos y plantillas
 
 class m2m_campo(models.Model):
     campo_id=models.ForeignKey(campo,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
     plantilla_id=models.ForeignKey(prd_plt_desc,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
 
-
+#Clase para la relacion de requerimientos de existencia y tipos de producto
 
 class m2m_reqexist(models.Model):
     requerimiento_exist_id=models.ForeignKey(prd_req_Exist,null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True)
