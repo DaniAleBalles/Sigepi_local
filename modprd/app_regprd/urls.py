@@ -4,7 +4,7 @@
 #fecha 25 -08 -2022
 
 from django.urls import path
-from .models import *
+from .models import * 
 from modprd.app_regprd.views import *
 from django.contrib.auth.decorators import login_required
 

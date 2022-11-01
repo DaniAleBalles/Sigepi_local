@@ -21,7 +21,7 @@ from modprd.app_desprd.models import *
 class vst_reg_etp(CreateView):
     model= prd_etp
     form_class = form_etp
-    template_name ='mod_cert_frm_registrar_etp.html'
+    template_name ='mod_des_frm_registrar_etp.html'
     success_url = reverse_lazy('listar_etp')
 
     def get_context_data(self, **kwargs):

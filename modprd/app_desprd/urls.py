@@ -13,5 +13,6 @@ urlpatterns = [
     #Url's Para el registro de producto
 
     path('mis_productos/', login_required(vst_list_des.as_view()), name='listar_etp'), # urlpara la consulta de productos
+    path('etapa/', login_required(vst_reg_etp.as_view()), name='registrar_etp'), # url para el registro de etapa de productos
 
 ]
