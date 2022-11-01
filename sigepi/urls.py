@@ -80,6 +80,7 @@ urlpatterns = [
     path('prd/', include('modprd.app_modprd.urls')),
     path('prd/', include('modprd.app_regprd.urls')),
     path('certprd/', include('modprd.app_certprd.urls')),   
+    path('desprd/', include('modprd.app_desprd.urls')),   
 ]
 
 urlpatterns += staticfiles_urlpatterns()

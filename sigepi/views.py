@@ -125,7 +125,7 @@ class front():
     def vst_cerrar(self, solicitud):
         logout(solicitud)
         messages.success(solicitud,"tu sesión ha cerrado ")
-        return render(solicitud,'index_front.html')
+        return redirect(to='inicio')
 
     def vst_vue(self, solicitud):
         stl=estilo()
