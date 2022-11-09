@@ -39,11 +39,20 @@ class prd_etp(models.Model):
     fch_ini=models.DateTimeField('Fecha de inicio de la etapa: ', null=True, blank=False) #fecha de inicio de la etapa
     fch_fin=models.DateTimeField('Fecha de finalizacion de la etapa: ', null=True, blank=False) #fecha de finalizacion de la etapa
 
+    class Meta:
+        verbose_name = 'Etapa'
+        verbose_name_plural = 'etapas'
+
 #clase para el desarrollo de un producto
 
 class prd_des (models.Model):
     id_desprd = models.AutoField(primary_key=True, null=False, unique=True) #Identificador del desarrollo de productos LLAVE PRIMARIA
     id_prd = models.ForeignKey(prd_base, null=True, blank=False, on_delete=models.SET_NULL, db_constraint=True) #Identificador del producto original LLAVE FORANEA
     id_etp_prd=models.ForeignKey(prd_etp, null=True, blank=True, on_delete=models.SET_NULL, db_constraint=True) #Identificador de la etapa del producto
+    
     def indic_desa(self):
         return self.id_prd_new.id_prd
+
+    class Meta:
+        verbose_name = 'desarrollo'
+        verbose_name_plural = 'desarrollos'

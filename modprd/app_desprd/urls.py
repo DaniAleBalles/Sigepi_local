@@ -3,6 +3,7 @@
 # Coautor(a):  Milton O. Castro Ch.
 #fecha 30 -10 -2022
 
+
 from django.urls import path
 from .models import *
 from modprd.app_desprd.views import *
